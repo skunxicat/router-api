@@ -1,8 +1,7 @@
 {
-  "name": "api-boilerplate",
+  "name": "router-api",
   "version": "1.0.0",
-  "description": "serverless api boilerplate",
-  "main": "index.js",
+  "description": "Expose your local router as an API endpoint — minimal, serverless, and programmable.",
   "scripts": {
     "terraform": "cd ../; ./terraform",
     "serverless": "./node_modules/serverless/bin/serverless.js",
@@ -11,14 +10,9 @@
     "runtime:bash:image": "npm run --silent terraform -- output -json lambda_runtime | jq -r .bash.image.name",
     "runtime:bash:build:dev": "DOCKER_DEV_BASH_IMAGE=$(npm run --silent runtime:bash:image | cut -d '/' -f2) && docker buildx build -t $DOCKER_DEV_BASH_IMAGE --platform linux/arm64 --secret id=github_token,env=GITHUB_TOKEN --load  ./bash",
     "runtime:bash:build": "DOCKER_BASH_IMAGE=$(npm run --silent runtime:bash:image) && docker buildx build -t $DOCKER_BASH_IMAGE --platform linux/arm64 --secret id=github_token,env=GITHUB_TOKEN --push  ./bash",
-    "runtime:golang:ecr:repository": "npm run --silent terraform -- output -json lambda_runtime | jq -r .golang.ecr.repository_url",
-    "runtime:golang:ecr:login": ". ../.env ; aws --profile $AWS_PROFILE --region $AWS_REGION ecr get-login-password | docker login --username AWS --password-stdin $(npm run --silent runtime:golang:ecr:repository)",
-    "runtime:golang:image": "npm run --silent terraform -- output -json lambda_runtime | jq -r .golang.image.name",
-    "runtime:golang:build:dev": "DOCKER_DEV_GOLANG_IMAGE=$(npm run --silent runtime:golang:image | cut -d '/' -f2) && docker buildx build --provenance=false --tag $DOCKER_DEV_GOLANG_IMAGE --platform linux/arm64  --load  ./golang",
-    "runtime:golang:build": "DOCKER_GOLANG_IMAGE=$(npm run --silent runtime:golang:image) && docker buildx build --provenance=false --tag $DOCKER_GOLANG_IMAGE --platform linux/arm64 --push  ./golang",
-    "runtime:build": "npm run runtime:bash:build && npm run runtime:golang:build",
-    "runtime:build:dev": "npm run runtime:bash:build:dev && npm run runtime:golang:build:dev",
-    "deploy": "npm run runtime:bash:ecr:login && npm run runtime:bash:build && npm run runtime:golang:ecr:login && npm run runtime:golang:build && npm run serverless -- deploy",
+    "runtime:build": "npm run runtime:bash:build",
+    "runtime:build:dev": "npm run runtime:bash:build:dev",
+    "deploy": "npm run runtime:bash:ecr:login && npm run runtime:bash:build && npm run serverless -- deploy",
     "logs:tail": "npm run serverless -- logs --tail"
   },
   "keywords": [
@@ -30,7 +24,7 @@
     "runtime",
     "go"
   ],
-  "author": "Ql4b Team <dev@ql4b.net>",
+  "author": "Carlo D'Ambrosio <carlo@ql4b.net>",
   "license": "ISC",
   "devDependencies": {
     "serverless": "^3.38.0"

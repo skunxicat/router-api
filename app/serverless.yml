@@ -1,0 +1,31 @@
+service: router-api
+frameworkVersion: "3"
+
+custom: ${file(sls/custom.yml):custom}
+
+provider:
+  name: aws
+  stage: ${opt:stage, 'staging'}
+  stackName: ${self:custom.appName}-${opt:stage, 'staging'}
+  region: eu-south-2
+  profile: ql4b
+  iam: ${file(./sls/iam.yml):iam}
+  
+  apiGateway:
+    restApiId: ${ssm:/ql4b/${self:custom.appName}/${self:provider.stage}/restApiId}
+    restApiRootResourceId: ${ssm:/ql4b/${self:custom.appName}/${self:provider.stage}/restApiRootResourceId}
+
+  ecr:
+    images:
+      lambda-bash:
+        uri: ${ssm:/ql4b/${self:custom.appName}/lambda-runtime/bash/image}
+      lambda-golang:
+        uri: ${ssm:/ql4b/${self:custom.appName}/lambda-runtime/golang/image}
+
+  environment: ${file(sls/env.yml):environment}
+
+  memorySize: 128
+  timeout: 10
+  architecture: arm64
+  
+functions: ${file(sls/functions.yml):functions}

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+ROOT_PATH=$(realpath $(dirname "$0"))
+INFRA_PATH="$ROOT_PATH/infra"
+
+ENV_FILENAME="$ROOT_PATH/.env"
+
+set -a
+source $(realpath $(dirname "$0")/.env);
+set +a
+
+"$TERRAFORM_BIN" -chdir=$INFRA_PATH "$@"

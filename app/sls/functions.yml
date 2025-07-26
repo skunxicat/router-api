@@ -1,0 +1,56 @@
+functions:
+  login: 
+    image: 
+      name: lambda-bash
+      command: ["handler.handle_login"]
+    environment:
+      HANDLER: "handler.handle_login"
+    events: 
+      - http:
+          path: /login
+          method: GET
+          cors: true
+  info: 
+    image: 
+      name: lambda-bash
+      command: ["handler.handle_info"]
+    environment:
+      HANDLER: "handler.handle_info"
+    events: 
+      - http:
+          path: /info
+          method: GET
+          cors: true
+  wan: 
+    image: 
+      name: lambda-bash
+      command: ["handler.handle_wan"]
+    environment:
+      HANDLER: "handler.handle_wan"
+    events: 
+      - http:
+          path: /wan
+          method: GET
+          cors: true
+  stations: 
+    image: 
+      name: lambda-bash
+      command: ["handler.handle_stations"]
+    environment:
+      HANDLER: "handler.handle_stations"
+    events: 
+      - http:
+          path: /stations
+          method: GET
+          cors: true
+  reboot: 
+    image: 
+      name: lambda-bash
+      command: ["handler.handle_reboot"]
+    environment:
+      HANDLER: "handler.handle_reboot"    
+    events: 
+      - http:
+          path: /reboot
+          method: GET
+          cors: true

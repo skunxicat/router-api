@@ -19,8 +19,6 @@ provider:
     images:
       lambda-bash:
         uri: ${ssm:/ql4b/${self:custom.appName}/lambda-runtime/bash/image}
-      lambda-golang:
-        uri: ${ssm:/ql4b/${self:custom.appName}/lambda-runtime/golang/image}
 
   environment: ${file(sls/env.yml):environment}
 

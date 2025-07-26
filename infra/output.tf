@@ -29,7 +29,9 @@ output ssm {
 }
 
 output router {
+    sensitive = true
     value = {
         ssm_credential_param = aws_ssm_parameter.router_credentials.name
+        ssm_url_param = aws_ssm_parameter.router_url
     }
 }

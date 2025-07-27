@@ -12,6 +12,8 @@ provider:
   iam: ${file(./sls/iam.yml):iam}
   
   apiGateway:
+    # apiKeys:
+    #   - ${ssm:/ql4b/${self:custom.appName}/${self:provider.stage}/restApiKey}
     restApiId: ${ssm:/ql4b/${self:custom.appName}/${self:provider.stage}/restApiId}
     restApiRootResourceId: ${ssm:/ql4b/${self:custom.appName}/${self:provider.stage}/restApiRootResourceId}
 
@@ -25,5 +27,6 @@ provider:
   memorySize: 128
   timeout: 10
   architecture: arm64
+  # private: true
   
 functions: ${file(sls/functions.yml):functions}

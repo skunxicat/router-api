@@ -18,3 +18,54 @@ This project scrapes the web interface your router already exposes and gives it 
 
 ```txt
 [client] --> [API Gateway] --> [Lambda] --> [Shell Function] --> [Router Web UI]
+```
+
+## Using the API 
+
+Set variables: 
+
+```bash
+npm run --silent rest_api:staging \
+    | jq -r '.key + " "  + .url'  \
+    | read API_KEY API_ENDPOINT
+```
+
+Send requests: 
+
+
+#### `/info` 
+
+```bash 
+# info
+http-cli --header "X-Api-Key: $API_KEY" \
+    $API_ENDPOINT/info \
+    | jq
+```
+
+#### `/wan` 
+```bash
+# wan
+http-cli --header "X-Api-Key: $API_KEY" \
+    $API_ENDPOINT/wan \
+    | jq
+```
+
+#### `/stations` 
+```bash
+# stations
+http-cli --header "X-Api-Key: $API_KEY" \
+    $API_ENDPOINT/stations \
+    | jq
+```
+
+#### `/reboot` 
+```bash
+# reboot 
+http-cli --header "X-Api-Key: $API_KEY" \
+    $API_ENDPOINT/reboot \
+    | jq
+```
+
+
+
+

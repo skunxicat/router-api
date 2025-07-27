@@ -98,3 +98,49 @@ reboot () {
     jq -n --arg sessionKey "$reboot_key" --arg responseCode "$response_code" \
         '{sessionKey: $sessionKey, responseCode: $responseCode|tonumber}'
 }
+
+mhs () {
+    local content
+    content=$(http-cli \
+        --header "Cookie: SESSION=$SESSION" \
+        "$ADMIN_URL/mhs.html" \
+        | htmlq 'script' --text -w -p
+    )
+    if [[ $? -ne 0 ]]; then
+        echo "Error: mhs.html is empty" >&2
+        exit 1
+    # else 
+    #     echo "$content" >&2
+    fi
+
+    local MHS_SSID
+    local MHS_PASS
+
+    MHS_SSID=$(echo "$content" | pcre2grep -o1 '(?<=tmp=)"(.+)"')
+    MHS_PASS=$(echo "$content" | pcre2grep -o1 '(?<=securitypassWPA2=)"(.+)"')
+
+    jq -n --arg SSID "$MHS_SSID" --arg PASSWORD "$MHS_PASS"  '{
+        SSID: $SSID,
+        KEY: $PASSWORD
+    }'
+}
+
+qr_build () {
+    local SSID=$1
+    local PASS=$2
+    echo "WIFI:S:$SSID;T:WPA;P:$PASS;;"
+}
+
+qr_encode () {
+    local SSID=$1
+    local PASS=$2
+    local TYPE=${3-"ANSIUTF8"}
+    local DATA=$(qr_build "$SSID" "$PASS")
+    
+    qrencode -t "$TYPE" -o - "$DATA"
+}
+    
+
+
+
+

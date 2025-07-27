@@ -13,7 +13,10 @@
     "runtime:build": "npm run runtime:bash:build",
     "runtime:build:dev": "npm run runtime:bash:build:dev",
     "deploy": "npm run runtime:bash:ecr:login && npm run runtime:bash:build && npm run serverless -- deploy",
-    "logs:tail": "npm run serverless -- logs --tail"
+    "logs:tail": "npm run serverless -- logs --tail",
+    "rest_api": "npm run --silent terraform -- output -json rest_api | jq",
+    "rest_api:staging": "npm run --silent terraform -- output -json rest_api | jq .staging",
+    "rest_api:prod": "npm run --silent terraform -- output -json rest_api | jq .prod"
   },
   "keywords": [
     "api",

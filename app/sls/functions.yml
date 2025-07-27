@@ -7,6 +7,7 @@ functions:
       HANDLER: "handler.handle_login"
     events: 
       - http:
+          private: true
           path: /login
           method: GET
           cors: true
@@ -18,6 +19,7 @@ functions:
       HANDLER: "handler.handle_info"
     events: 
       - http:
+          private: true
           path: /info
           method: GET
           cors: true
@@ -29,6 +31,7 @@ functions:
       HANDLER: "handler.handle_wan"
     events: 
       - http:
+          private: true
           path: /wan
           method: GET
           cors: true
@@ -40,6 +43,7 @@ functions:
       HANDLER: "handler.handle_stations"
     events: 
       - http:
+          private: true
           path: /stations
           method: GET
           cors: true
@@ -51,6 +55,7 @@ functions:
       HANDLER: "handler.handle_reboot"    
     events: 
       - http:
+          private: true
           path: /reboot
           method: GET
           cors: true

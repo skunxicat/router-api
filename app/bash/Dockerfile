@@ -37,7 +37,9 @@ RUN autoreconf -fiv && \
     strip qrencode
 
 
-FROM ghcr.io/ql4b/lambda-shell-runtime:0.1.0-develop.18-tiny
+# FROM ghcr.io/ql4b/lambda-shell-runtime:0.1.0-develop.18-tiny
+# FROM public.ecr.aws/j5r7n1v7/lambda-shell-runtime:develop-tiny
+FROM ghcr.io/ql4b/lambda-shell-runtime:tiny
 
 WORKDIR /var/task
 

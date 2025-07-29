@@ -3,8 +3,8 @@ functions:
     image: 
       name: lambda-bash
       command: ["handler.handle_login"]
-    environment:
-      HANDLER: "handler.handle_login"
+    # environment:
+    #   HANDLER: "handler.handle_login"
     events: 
       - http:
           private: true
@@ -15,8 +15,8 @@ functions:
     image: 
       name: lambda-bash
       command: ["handler.handle_info"]
-    environment:
-      HANDLER: "handler.handle_info"
+    # environment:
+    #   HANDLER: "handler.handle_info"
     events: 
       - http:
           private: true
@@ -27,8 +27,8 @@ functions:
     image: 
       name: lambda-bash
       command: ["handler.handle_wan"]
-    environment:
-      HANDLER: "handler.handle_wan"
+    # environment:
+    #   HANDLER: "handler.handle_wan"
     events: 
       - http:
           private: true
@@ -51,8 +51,8 @@ functions:
     image: 
       name: lambda-bash
       command: ["handler.handle_reboot"]
-    environment:
-      HANDLER: "handler.handle_reboot"    
+    # environment:
+    #   HANDLER: "handler.handle_reboot"    
     events: 
       - http:
           private: true
